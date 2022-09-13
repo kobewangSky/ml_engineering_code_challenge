@@ -2,3 +2,5 @@ scikit-learn
 xgboost
 scipy
 pandas
+seaborn
+pyspark
