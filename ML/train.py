@@ -1,5 +1,13 @@
 import argparse
 from Model.Arrhythmia_classification import Arrhythmia_classification
+from pyspark.sql import SQLContext,SparkSession
+from pyspark import SparkContext,SparkConf
+from pyspark.sql.functions import *
+from pyspark.sql.types import *
+
+spark = SparkSession.builder.appName("ReadWriteSpark").getOrCreate()
+sparkcont = SparkContext.getOrCreate(SparkConf().setAppName("ReadWriteSpark"))
+logs = sparkcont.setLogLevel("ERROR")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
