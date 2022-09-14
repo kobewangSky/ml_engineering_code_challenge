@@ -11,7 +11,7 @@ $ docker build -t ml_engineering_code_challenge .
 2.docker run train
 ```bash
 $ docker run -it --rm ml_engineering_code_challenge 
-$ spark-submit --master local --num-executors 2 --executor-memory 1G --executor-cores 2 --driver-memory 1G train.py --datapath ./data/arrhythmia.data --test_size 0.2
+$ spark-submit --master local --num-executors 2 --executor-memory 1G --executor-cores 2 --driver-memory 1G train.py --datapath ./data/arrhythmia.data --test_size 0.2 --remove_col 20,-2
 ```
 check here to see the training result 
 https://wandb.ai/bluce54088/ml_engineering_code_challenge?workspace=user-
