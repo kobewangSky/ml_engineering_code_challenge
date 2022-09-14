@@ -12,6 +12,9 @@ $ docker build -t ml_engineering_code_challenge .
 $ docker run -it --rm ml_engineering_code_challenge 
 $ spark-submit --master local --num-executors 2 --executor-memory 1G --executor-cores 2 --driver-memory 1G train.py --datapath ./data/arrhythmia.data --test_size 0.2
 ```
+check here to see the training result 
+https://wandb.ai/bluce54088/ml_engineering_code_challenge?workspace=user-
+
 
 3.docker run inference
 ```bash
@@ -24,4 +27,5 @@ $ spark-submit --master local --num-executors 2 --executor-memory 1G --executor-
 $ docker run -it --rm ml_engineering_code_challenge 
 $ spark-submit --master local --num-executors 2 --executor-memory 1G --executor-cores 2 --driver-memory 1G analytics.py --datapath ./data/arrhythmia.data
 ```
-
+check here to see the Analytics result
+https://wandb.ai/bluce54088/ml_engineering_code_challenge?workspace=user-
