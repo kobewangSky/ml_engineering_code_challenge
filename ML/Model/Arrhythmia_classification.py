@@ -23,10 +23,11 @@ import warnings
 warnings.filterwarnings('ignore')
 
 class Arrhythmia_classification(ModelAbstract):
-    def __init__(self, datapath = '', test_size = 0.2, inference_data = []):
+    def __init__(self, datapath = '', test_size = 0.2, inference_data = [], remove_col = '20,-2'):
         self.test_size = test_size
         self.datapath = datapath
         self.inference_data = inference_data
+        self.remove_col = remove_col
     def label_encoding(self, old_column):
         le = LabelEncoder()
         le.fit(old_column)
@@ -47,7 +48,10 @@ class Arrhythmia_classification(ModelAbstract):
         self.target = self.df[self.df.columns[len(self.df.columns) - 1]].name
 
         self.df.dropna(axis=0, inplace=True)
-        self.df.drop(self.df.columns[20:-2], axis=1, inplace=True)
+        if self.remove_col != None:
+            print(f"remove area {self.remove_col}")
+            rangeA, rangeB = self.remove_col.split(',')
+            self.df.drop(self.df.columns[int(rangeA):int(rangeB)], axis=1, inplace=True)
 
         def function(x):
             if int(x) > 1:
