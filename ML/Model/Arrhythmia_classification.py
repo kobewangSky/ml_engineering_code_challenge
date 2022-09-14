@@ -1,12 +1,7 @@
-import pandas as pd
-import numpy as np
 import pickle
 import os
 
 from sklearn.model_selection import RandomizedSearchCV, cross_validate
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score, confusion_matrix, mean_squared_error
@@ -14,7 +9,6 @@ from xgboost import XGBClassifier, XGBRegressor
 
 import seaborn as sns
 import scipy.stats as st
-import argparse
 
 from Model.ModelAbstract import ModelAbstract
 import pyspark as spark
@@ -25,13 +19,8 @@ from wandb.xgboost import wandb_callback
 
 wandb.init(project="ml_engineering_code_challenge", entity="bluce54088")
 
-
 import warnings
 warnings.filterwarnings('ignore')
-
-
-
-
 
 class Arrhythmia_classification(ModelAbstract):
     def __init__(self, datapath = '', test_size = 0.2, inference_data = []):
