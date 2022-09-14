@@ -6,8 +6,8 @@ from pyspark import SparkContext,SparkConf
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
 
-spark = SparkSession.builder.appName("ReadWriteSpark").getOrCreate()
-sparkcont = SparkContext.getOrCreate(SparkConf().setAppName("ReadWriteSpark"))
+spark = SparkSession.builder.appName("InferenceSpark").getOrCreate()
+sparkcont = SparkContext.getOrCreate(SparkConf().setAppName("InferenceSpark"))
 logs = sparkcont.setLogLevel("ERROR")
 
 if __name__ == '__main__':
@@ -18,9 +18,9 @@ if __name__ == '__main__':
     parser.add_argument('--test_data', type=str, required=False, help='test inference data')
     opt = parser.parse_args()
 
-    model = Arrhythmia_classification()
+    model = Arrhythmia_classification(inference_data=opt.test_data)
 
-    result = model.inference(opt.test_data)
+    result = model.inference()
 
     print(f"result == {result}")
 

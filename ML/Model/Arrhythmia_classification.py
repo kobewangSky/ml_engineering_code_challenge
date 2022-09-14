@@ -19,16 +19,25 @@ import argparse
 from Model.ModelAbstract import ModelAbstract
 import pyspark as spark
 from pyspark.sql import SparkSession
+import wandb
+import xgboost as xgb
+from wandb.xgboost import wandb_callback
+
+wandb.init(project="ml_engineering_code_challenge", entity="bluce54088")
+
 
 import warnings
 warnings.filterwarnings('ignore')
 
 
+
+
+
 class Arrhythmia_classification(ModelAbstract):
-    def __init__(self, datapath = '', test_size = 0.2):
+    def __init__(self, datapath = '', test_size = 0.2, inference_data = []):
         self.test_size = test_size
         self.datapath = datapath
-
+        self.inference_data = inference_data
     def label_encoding(self, old_column):
         le = LabelEncoder()
         le.fit(old_column)
@@ -65,7 +74,10 @@ class Arrhythmia_classification(ModelAbstract):
             if type(self.df[i][0]) == str:
                 self.df[i] = self.label_encoding(self.df[i])
 
+        #self.df = self.df.apply(pd.to_numeric, errors='coerce')
+
     def train(self):
+
 
         y = self.df[self.target].values
         x = self.df.drop([self.target], axis=1).values
@@ -88,6 +100,7 @@ class Arrhythmia_classification(ModelAbstract):
             "min_child_weight": st.expon(0, 50),
 
         }
+        wandb.init(config=params)
 
         # Random Search Training with 5 folds Cross Validation
         model_result = RandomizedSearchCV(model_2, params, cv=5,
@@ -98,6 +111,9 @@ class Arrhythmia_classification(ModelAbstract):
         pred_final = model_result.predict(X_test)
 
         print("accuracy is: ", accuracy_score(y_test, pred_final))
+        wandb.log({"acc": accuracy_score(y_test, pred_final)})
+
+        # Optional
 
         filename = f"{__name__}.pkl"
         pickle.dump(model_result, open(filename, 'wb'))
@@ -105,8 +121,8 @@ class Arrhythmia_classification(ModelAbstract):
 
         return model_result
 
-    def inference(self, input_data ):
-        input_data = self.inference_data_prepare(input_data)
+    def inference(self ):
+        input_data = self.inference_data_prepare(self.inference_data)
         filename = f"{__name__}.pkl"
         if os.path.exists(filename):
             loaded_model = pickle.load(open(filename, 'rb'))
@@ -116,4 +132,13 @@ class Arrhythmia_classification(ModelAbstract):
 
         result = loaded_model.predict(input_data)
         return result
+
+    def DataAnalytics(self):
+
+        self.preparedata()
+        filename = self.plotScatterMatrix(self.df,20, 10)
+
+        wandb.log({"visual": wandb.Image(filename)})
+
+
 

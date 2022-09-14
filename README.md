@@ -18,3 +18,10 @@ $ spark-submit --master local --num-executors 2 --executor-memory 1G --executor-
 $ docker run -it --rm ml_engineering_code_challenge 
 $ spark-submit --master local --num-executors 2 --executor-memory 1G --executor-cores 2 --driver-memory 1G inference.py --test_data 46,0,163,86,99,163,393,150,113,-5,121,66,56,69.,42.,24.,68.,0.,0.,0.,27.7
 ```
+
+4.docker Data Analytics
+```bash
+$ docker run -it --rm ml_engineering_code_challenge 
+$ spark-submit --master local --num-executors 2 --executor-memory 1G --executor-cores 2 --driver-memory 1G analytics.py --datapath ./data/arrhythmia.data
+```
+

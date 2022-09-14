@@ -32,6 +32,7 @@ RUN apt-get upgrade -y
 #RUN apt-get install openjdk-8-jdk-headless -qq -y
 
 RUN pip install -r requirements.txt
-
+RUN wandb login 1a7411e1f7bf1f61f9c5715761677a5337584f90
 
 ENTRYPOINT ["/bin/bash"]
+

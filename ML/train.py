@@ -5,8 +5,8 @@ from pyspark import SparkContext,SparkConf
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
 
-spark = SparkSession.builder.appName("ReadWriteSpark").getOrCreate()
-sparkcont = SparkContext.getOrCreate(SparkConf().setAppName("ReadWriteSpark"))
+spark = SparkSession.builder.appName("TrainSpark").getOrCreate()
+sparkcont = SparkContext.getOrCreate(SparkConf().setAppName("TrainSpark"))
 logs = sparkcont.setLogLevel("ERROR")
 
 if __name__ == '__main__':
@@ -16,7 +16,7 @@ if __name__ == '__main__':
     parser.add_argument('--test_size', type=float, required=True, help='test size rate')
     opt = parser.parse_args()
 
-    model = Arrhythmia_classification(opt.datapath, opt.test_size)
+    model = Arrhythmia_classification(datapath=opt.datapath, test_size=opt.test_size)
 
     model.preparedata()
 
