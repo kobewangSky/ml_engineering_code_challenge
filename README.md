@@ -4,6 +4,7 @@
 1.docker build
 ```bash
 $ git clone https://github.com/kobewangSky/ml_engineering_code_challenge.git
+$ cd ml_engineering_code_challenge/ML/
 $ docker build -t ml_engineering_code_challenge .
 ```
 
